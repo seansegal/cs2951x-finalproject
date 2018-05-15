@@ -1,0 +1,388 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% ICML 2013 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the following line _only_ if you're still using LaTeX 2.09.
+%\documentstyle[icml2013,epsf,natbib]{article}
+% If you rely on Latex2e packages, like most moden people use this:
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+%\usepackage{epsfig} % less modern
+\usepackage{subfigure}
+
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{icml2013} with
+% \usepackage[nohyperref]{icml2013} above.
+\usepackage{hyperref}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+% \usepackage{icml2013}
+% Employ this version of the ``usepackage'' statement after the paper has
+% been accepted, when creating the final version.  This will set the
+% note in the first column to ``Proceedings of the...''
+\usepackage[accepted]{icml2013}
+
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{Sorting Numbers Using Plastic Neural Networks}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Sorting Numbers Using Plastic Neural Networks \\
+           CSCI 2951X}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2013
+% package.
+\icmlauthor{Sean Segal}{sean\_segal@brown.edu}
+\icmladdress{Brown University,
+            69 Brown St. RI 02912 USA}
+\icmlauthor{Ansel Vahle}{ansel\_vahle@brown.edu}
+\icmladdress{Brown University,
+            69 Brown St. RI 02912 USA}
+
+
+\vskip 0.3in
+]
+
+\begin{abstract}
+This paper explores recent attempts to model synaptic plasticity in artificial
+neural networks. In particular, we replicate the architecture proposed by Miconi et al. (2018)
+in which traditional neural networks are augemented so that each neuron's output is determined
+by both a traditional fixed compoenent in addition to a fast-changing plastic component.
+We test the effectiveness of this new architecture on a sorting task --- a domain that has
+not yet been openly published before. The inspiration for this task comes from
+the intersection of logical problems and connectionism, with many connectionsist
+systems being explicitly defined to solve these problems rather than learned. We find that plastic networks offer a slight improvement
+over traditional neural networks, demonstrating the flexibility and context dependent
+computation introduced by this model.
+\end{abstract}
+
+
+\section{Introduction}
+The beauty of intelligence is the ability to adapt. Humans themselves are able
+to learn new concepts, actions, and structures very quickly and are able to
+apply previous experience and context in order to do this more efficiently.
+Likewise, humans are most impressed when other forms of life are able to handle
+uncertainty. Many computer scientists believe that understanding how humans and other
+biological agents rapidly learn from their experiences will help push research towards
+creating more effective agents. This growing field is referred to as meta-learning \cite{Thrun98}.
+
+In order to replicate function, one often tries to replicate the form. As modern
+research moves forward in search of artificial intelligence, scientists have attempted to
+mimic the biological conception of intelligence, the brain.
+Neural networks, meant to loosely replicate the action of neurons firing in the brain,
+have achieved unparalleled performance in many different domains \cite{AlexNet, Mnih13, AlphaGo, Seq2Seq, GoogleTranslation}. Recurrent
+neural networks, in particular long short-term memory networks
+\cite{Hochreiter97}, have achieved a high level of performance
+on account of their ability to take into account the recent past and can effectively
+take context into account when operating. Assuming a general knowledge of neural
+networks --- this memory comes in the form of the form of the weights, often
+referred to as synapses or neurons.
+
+While RNNs and hidden Markov models are able to capture
+a hidden state, RNN's were a large step forward, as they have a higher computational capacity
+and a greater memory. Alex Graves \cite{Graves14} points out the necessity of this ``dynamic'' state
+as it allows for context dependent computation, i.e. allowing recent information gained
+to affect the output of a current input.
+
+% In comparison to hidden Markov models, which also contain dynamic state, RNNs
+% have a distributed state and therefore have significantly larger and richer memory
+% and computational capacity. Dynamic state is crucial because it affords the possibility
+% of context-dependent computation; a signal entering at a given moment can alter
+% the behaviour of the network at a much later moment.
+% Neural Turing Machines
+
+
+The amount of information they can store is inherently limited and it
+can take a significant amount of time for these networks to account for new
+information. Ba and Hinton bound this long term memory at
+$O(H2) + O(IH) + O(HO)$ where $H$, $I$, and $O$ are the sizes of hidden, input,
+and output units, respectively \cite{BaHinton16}; this memory capacity, while powerful, is slow to update
+and does not actively reflect new information, but instead reflects inferred
+patterns from the data. They bound the amount of short term
+memory at just $O(H)$. Regardless of memory capacity, a different neural net
+must be trained for each task and there is little flexibility in function even
+if there is a consistently defined input and output set.
+
+Ba and Hinton \yrcite{BaHinton16} additionally bound
+the timescale for different mechanisms used to reflect the context of different
+samples; each of the proposed methods, e.g. attention \cite{BahdanauCB14},
+is not fast enough for both computational efficiency and actively reflecting
+the context. As the field stood a few years ago, there was a question of how to increase the
+memory capacity of these nets a) without having to create arbitrarily deep nets,
+b) sacrifice computational efficiency, c) build long term memory while also
+being able to heavily weight new information.
+
+In human brains, there is some question about how long term human memory is
+stored. Some \cite{Martin00, Liu12} believe that it is achieved
+through synaptic plasticity, i.e. the process in which neurons become more
+heavily connected the more they interact and vice versa. This theory is
+attributed to Hebbs and is best described in his aphorism, ``neurons that fire
+together, wire together'' \cite{Hebb49}. However, there is also evidence that
+the brain utilizes properties of synaptic plasticity in the short term to maintain
+context and rapidly adjust to new information \cite{Tsodyks98, Abbott04, Barak07}.
+
+In typical fashion, many computer scientists have attempted to replicate
+this aspect of the human brain. Two papers \cite{BaHinton16, Miconi18} have taken
+similar approaches to this --- effectively creating a separate weight matrix
+that accounts for the interaction between neurons (see section 2.1 for more detail).
+This weight matrix is updated significantly after each sample and information from
+previous samples exponentially decays if it is not being used. As these weights
+are rapidly generated and allow for context dependent computation, it is a logical
+step to consider the implications of these weights on the efficacy of these
+methods in meta-learning (see section 2.2).
+
+As mentioned previously, neural nets have achieved success in many different domains;
+the majority of these domains do not include logical problems, such as sorting,
+memorization, and boolean. It has been
+demonstrated that RNNs are Turing-Complete \cite{Siegelmann95}, which implies that these can (not necessarily should)
+be used for accomplishing these tasks. Some have attempted to create end-to-end
+systems entirely composed of neural nets. The implications of this are these operations can be differentiated. Many of these networks
+are explicitly constructed by hand and are therefore not flexible. One such task
+is using neural nets to sort lists of numbers \cite{sort1, sort2}. In this paper,
+we propose testing a plasticity method on the domain of sorting numbers.
+% if a neuron repeatedly takes part in making another neuron fire, the connection between them is strengthened
+% (Hebb, 1949)
+
+% Introduce differtiable plasticity?
+
+\section{Related Work}
+
+\subsection{Fast Weights}
+The idea of fast weights was in response to two new developments in the field of
+deep learning: new variations in types of memory and new types of context computing.
+Graves' Neural Turing Machines \cite{Graves14} were reading and writing to static memory using
+a method he developed specifically for his machine; Grefenstette built RNNs on top of
+Stacks, Queues, and DeQues \cite{GrefenstetteHSB15}; and Facebook had just developed
+a new type of neural network called a Memory Network that was meant to explicitly
+relate input features to output features and to contain a memory of previous responses \cite{WestonCB14}.
+
+Ba, Hinton, and others at Google \yrcite{BaHinton16} believed that these structures were not realistically based on the
+structure of the brain and thus could never achieve the same success. They additionally
+found fault in these methods as there were particular rules concerning when
+and how to update these weights. While they did want to increase the memory capacity
+of these nets, they placed a heavier emphasis on ``having a simple, non-iterative storage rule.''
+They settled on using ``an outer product rule to store hidden activity vectors in fast weights that decay rapidly.''
+
+They achieve this by initially defining some fast weights matrix, $A$. They then
+define a decay rate $\lambda$ and a learning rate $\eta$. At each iteration, $t$, the matrix $A$ decays and
+the new fast weights matrix, i.e. the outer product of the hidden state vector, $h(t)$, scaled by $\eta$.
+\begin{align}
+  A(t) = \lambda A(t-1) + \eta h(t)h(t)^T
+\end{align}
+They utilize this fast weights matrix when computing the hidden vector for each input.
+They do this in a multi step process, where they repeatedly apply the fast weights
+matrix, the hidden weights $W$ and $C$, and the nonlinear function $\sigma$ to generate $s$ intermediate states.
+\begin{align}
+  h_{s+1}(t+1) = f([Wh(t) + Cx(t)] + A(t)h_s(t+1))
+\end{align}
+From here, they go on to show that at any given step $A$ still reflects previous
+inputs and that you can rewrite the fast weights matrix and the product of it and the hidden state as:
+\begin{align}
+  A(t) = \eta & \sum^{\tau=t}_{\tau = 1}\lambda^{t-\tau}h(\tau)h(\tau)^T\\
+  A(t)h_s(t+1) = \eta & \sum^{\tau = t}_{\tau = 1}\lambda^{t-\tau}h(\tau)[h(\tau)^Th_s(t+1)]
+\end{align}
+For a more detailed explanation of the algorithm and the proof, please see the paper.
+
+\subsection{Differentiable Plasticity}
+Researchers at Uber AI Labs \cite{Miconi18}, compelled by other research in meta-learning, sought
+to apply the principles of synaptic plasticity to these domains. Relying on the
+work on their previous demonstration of feasibility and tractability for
+this type of model \cite{Miconi16}, they increased the scope of the domains explored to show
+that plasticity methods are incredibly effective even when millions of parameters
+are required.
+
+The fast weights algorithm described a fixed weighting of the plastic components
+when applying it to the non-plastic components. The authors of this paper made
+an intentional choice to redefine the computations such that the plastic and
+non-plastic components would be separate. They define the plastic components as
+a Hebbian trace. This is defined in a very similar manner to the fast weights
+but instead of using a fixed learning rate, they instead use a convex combination
+of the previous Hebbian matrix and the new update.
+\begin{align}
+  \text{Hebb}_{i,j}(t+1) = \eta x_i(t 1)x_j(t)+(1-\eta)\text{Hebb}_{i,j}(t)
+\end{align}
+The real optimization they introduced
+is a weight matrix, $\alpha$, that regulates how plastic each neuron should be,
+i.e. how much weight to give to the plastic component of each neuron. The $\alpha$ matrix
+can additionally be optimized via gradient descent. The following
+equation expresses how the value of each output is determined.
+\begin{align}
+  x_j(t) = \sigma \{\sum_{i\in \text{inputs}} [&w_{i,j}x_i(t-1)]\notag\\
+  &+ \alpha_{i,j}\text{Hebb}_{i,j}(t)x_i(t-1)]\}
+\end{align}
+$\sigma$ here is again the nonlinear function defined earlier; the authors
+use \texttt{tanh} throughout the paper.
+The authors then made another jump --- the alphas maintain state across many
+episodes, effectively reflecting the strengthening of synaptic connections.
+The Hebbian trace, on the other hand, is reset to 0 at the end of each episode.
+Thus, in order to rebuild any benefit of plasticity in the short term,
+several examples must be input. As the authors point out, this rule effectively
+demonstrates that over time these traces go to zero (assuming time increments
+without new input). They additionally experiment with another rule, Oja's rule \cite{Oja08},
+to calculate the Hebbian traces
+\begin{align}
+  \text{Hebb}_{i,j}(t & +1) = \text{Hebb}_{i,j}(t)\notag\\
+  & +\eta x_j (t)(x_i(t-1) - x_j(t)\text{Hebb}_{i,j}(y))
+\end{align}
+For a more detailed explanation of the algorithm, please see the paper.
+
+% Designing agents that can quickly learn from ongoing experience is the basic
+% problem of meta-learning, or “learning- to-learn” (Thrun & Pratt, 1998).
+% Several methods already exist to address this problem. One approach is to augment
+% neural networks with external content-addressable memory banks, as in Memory
+% Networks and Neural Turing Machines (Graves et al., 2014; Sukhbaatar et al.,
+% 2015; Santoro et al., 2016). The memory bank can be read from and written to
+% by an attentional mechanism within the controller network, enabling fast
+% memorization of ongoing experience. A more straightforward approach is to
+% simply train standard recur- rent networks (which, as universal Turing machines,
+% can in principle learn any computable function of their inputs) to adequately
+% incorporate past experience in their future responses. With a proper training
+% schedule (e.g. augmenting inputs at time t with the output and error at time t_1),
+% recur- rent networks can learn to automatically integrate novel in- formation
+% during an episode (Hochreiter et al., 2001; Wang et al., 2016; Duan et al., 2016).
+
+
+
+\subsection{Neural Sorting}
+There have been several papers the discuss the feasibility of neural sorting
+\cite{sort1, sort2}. These networks are specifically constructed
+to output the proper answer. This provides a powerful intution that demonstrates
+the differentiability of a logical process. However, neural networks are
+best known for being able to take in data and learn to output the correct answer,
+through either supervised or unsupervised learning. Teaching a neural network
+to sort is a different task than building one that works.
+% Fast weights paper?
+
+%  Neural turing machines for memeory?
+
+
+\section{Our Experiment}
+The goal of our experiements is to replicate the network architecture of \cite{Miconi18}
+and test the network's performance on a sorting task - a task that was not explored in their
+original work.
+
+While our experiment is primarily a supervised learning task, it can help to view the task
+through the lens of reinforcement learning. At any point it time, the agent is in one of two
+states: $A$ or $D$. In state $A$ the goal of the agent is to sort a given sequence of numbers
+in ascending order. Alternatively, in state $D$, the goal of the agent is to sort the given
+sequence in descending order. After every \texttt{num\_steps} samples, there is a probability $p$
+that the agent will transition to state $D$ and a probability $1-p$ that the agent will transition to
+state $A$. (Note that this transition is indepdent of the current state.) Finally, the reward is defined
+as (the negative) of the mean squared error of each element in the sequence.
+
+The challenge here is that the same network must learn to sort numbers in increasing and decreasing order.
+Additionally, given an input, the network \textit{does not know} which order it should be sorted (ie: it does not know the current state).
+When designing this experiement, the hope is that the plastic neural network will be able to adapt to the different settings and quickly
+learn whether to sort numbers in ascending or descending order from only a few examples. Furthermore, one would expect that a network trained to sort values in
+ascending order and one trained to sort numbers in descending order to share some weights. A plastic neural network should be able to learn these connections and set them to be fixed across episodes while settings connections that must be different between the two tasks to be more plastic.
+
+We implemented plastic neural networks in Python using Tensorflow. We used a three-layer feedforward neural network as a baseline. We used \texttt{tanh}
+as an activation function and varied the hidden sizes of the layers between 20 to 80. We used a learning rate of \texttt{1e-5} with the built in Adam optimizer \cite{KingmaB14}.
+
+In order to ensure a fair comparison, we used an identical architecture and parameters for the plastic network. The only difference was that we added the $\alpha$ paramaeters described above and kept track of a Hebbian trace for each plastic layer. We experimented with a neural network in which only the final layer was plastic, only the first layer was plastic and all layers were plastic.
+
+\section{Results}
+
+In all the experiments below we set \texttt{num\_steps} = 50 and \texttt{num\_epsiodes} = 5000. For each epsiode, the inputs of each sequence were selected uniformly at random from the integers between 0-100. Then, with probability $p = 0.5$, the labeled examples were those sequences sorted in descending order and with probability $1-p$ those sequences were sorted in ascending order. The networks were training on 50 sequences (or steps) per epsiode.
+
+After training, we repeated this proceess on $50$ test episodes. During testing, the gradient descent optimizer was no longer run. However, the Hebbian traces were still updated and passed to the neural net at each step. The loss report below can be calculated as
+$$ \sum_{s = 1}^{\texttt{num\_steps}} \sum_{i = 1}^{\texttt{sequence\_len}} (y_{si} - \hat{y}_{si})^2$$
+where $y_s$ is the true sorted sequence for step $s$ and $\hat{y}_{s}$ is the output of the neural network for step $s$.
+
+Our results are available in Table 1. We can see that in all trials, the plastic networks modestly outperformed the non-plastic networks. Given that the plastic neural networks have twice as many parameters as the regular networks, the gain in performance is minimal and may not be worth the additional memory and computational resources required.
+
+\begin{table}[t]
+\caption{Total mean squared error (over 500 sequences) of sorted sequences on test dataset}
+\label{sample-table}
+\vskip 0.15in
+\begin{center}
+\begin{small}
+\begin{sc}
+\begin{tabular}{lcr}
+\hline
+\abovespace\belowspace
+Data set & Non-plastic &  Plastic \\
+\hline
+\abovespace
+Hidden Size 20 (Trial 1) & 1.2339 & 1.5495 \\
+Hidden Size 20 (Trial 2) & 1.2082 & 1.4281 \\
+Hidden Size 40 (Trial 1) & 1.3864 & 1.6192 \\
+Hidden Size 40 (Trial 2) & 1.2738 & 1.2973 \\
+\belowspace
+Hidden Size 40 (Trial 3) & 1.2745 & 1.4842 \\
+\hline
+\end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.25in
+\end{table}
+
+It is important to note that we also tried networks with larger hidden sizes ($80$ and above). Results for these networks were worse for both the plastic and non-plastic networks, most likely because they required more data to effectively train. Given more computational resources, we would retrain the larger networks with more episodes and compare the results of those nets.
+
+
+\section{Future Work}
+The breadth of our experiments were restricted due to limited computational
+resources. It would be interesting to run these experiements with networks with
+more complicated architectures, including deeper networks and potentially
+recurrent neural networks. Additionally, given that differentiable plasticity
+is very recent development, there are many other domains in which it would be
+interesting to test the performance of this new architecture.
+
+Applying this framework to a transfer learning problem would be quite interesting.
+Given a reinforcement learning problem with a fixed agent space, it would
+be interesting to see how neurons again rely on each other as the problem
+space changes. As Miconi et al. demonstrate, this framework is effective on
+time specific domains and can be applied to reinforcement learning problems,
+implying that this task is feasible. A similar experiment would be to consider
+the plasticity weights generated from different networks trained in the same
+environments, but with different goals, to see what information the plasticity
+weights seem to represent.
+
+\section{Conclusion}
+In the past year, neural networks that model synaptic plasticity have become a promising new research area.  The power of synaptic plasticity is clear when observing human beings' abilities to quickly adapt to new environments and this is clearly a property that one would expect to exist in intelligent agents. Our work surveys recent work in the area and tests Uber AI Lab's architecture on a new domain. Our tests demonstrate that plasticity offers some improvements over regular neural networks in the domain of neural sorting. Given more computational resources, it would be interesting to continue testing how plasticity affects the performance of different network architectures in the sorting domain. Overall, however, our experiment suggests that plasticity may only provide a significant performance boost in ``Learning to Learn'' domains rather than in supervised domains.
+
+\subsection{Software and Data}
+The code from our experiments are open source and can be found on Github, here: \href{https://github.com/seansegal/cs2951x-finalproject}{https://github.com/seansegal/cs2951x-finalproject}.
+
+\bibliography{report}
+\bibliographystyle{report}
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was
+% created by Lise Getoor and Tobias Scheffer, it was slightly modified
+% from the 2010 version by Thorsten Joachims & Johannes Fuernkranz,
+% slightly modified from the 2009 version by Kiri Wagstaff and
+% Sam Roweis's 2008 version, which is slightly modified from
+% Prasad Tadepalli's 2007 version which is a lightly
+% changed version of the previous year's version by Andrew Moore,
+% which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.

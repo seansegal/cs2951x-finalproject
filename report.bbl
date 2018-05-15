@@ -1,0 +1,194 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Ba} et~al.(2016){Ba}, {Hinton}, {Mnih}, {Leibo}, and
+  {Ionescu}]{BaHinton16}
+{Ba}, J., {Hinton}, G., {Mnih}, V., {Leibo}, J.~Z., and {Ionescu}, C.
+\newblock {Using Fast Weights to Attend to the Recent Past}.
+\newblock \emph{ArXiv e-prints}, October 2016.
+
+\bibitem[Bahdanau et~al.(2014)Bahdanau, Cho, and Bengio]{BahdanauCB14}
+Bahdanau, Dzmitry, Cho, Kyunghyun, and Bengio, Yoshua.
+\newblock Neural machine translation by jointly learning to align and
+  translate.
+\newblock \emph{CoRR}, abs/1409.0473, 2014.
+\newblock URL \url{http://arxiv.org/abs/1409.0473}.
+
+\bibitem[Barak \& Tsodyks(2007)Barak and Tsodyks]{Barak07}
+Barak, Omri and Tsodyks, Misha.
+\newblock Persistent activity in neural networks with dynamic synapses.
+\newblock \emph{PLOS Computational Biology}, 3\penalty0 (2):\penalty0 1--1, 02
+  2007.
+\newblock \doi{10.1371/journal.pcbi.0030035}.
+\newblock URL \url{https://doi.org/10.1371/journal.pcbi.0030035}.
+
+\bibitem[Chen \& Hsieh(1990)Chen and Hsieh]{sort2}
+Chen, W. T. C. Wen-Tsuen and Hsieh, K. R. H. Kuen-Rong.
+\newblock A neural sorting network with o(1) time complexity.
+\newblock In \emph{1990 IJCNN International Joint Conference on Neural
+  Networks}, pp.\  87--95 vol.1, June 1990.
+\newblock \doi{10.1109/IJCNN.1990.137551}.
+
+\bibitem[F~Abbott \& Regehr(2004)F~Abbott and Regehr]{Abbott04}
+F~Abbott, L and Regehr, Wade.
+\newblock Synaptic computation.
+\newblock 431:\penalty0 796--803, 11 2004.
+
+\bibitem[Graves et~al.(2014)Graves, Wayne, and Danihelka]{Graves14}
+Graves, Alex, Wayne, Greg, and Danihelka, Ivo.
+\newblock Neural turing machines.
+\newblock \emph{CoRR}, abs/1410.5401, 2014.
+\newblock URL \url{http://arxiv.org/abs/1410.5401}.
+
+\bibitem[Grefenstette et~al.(2015)Grefenstette, Hermann, Suleyman, and
+  Blunsom]{GrefenstetteHSB15}
+Grefenstette, Edward, Hermann, Karl~Moritz, Suleyman, Mustafa, and Blunsom,
+  Phil.
+\newblock Learning to transduce with unbounded memory.
+\newblock \emph{CoRR}, abs/1506.02516, 2015.
+\newblock URL \url{http://arxiv.org/abs/1506.02516}.
+
+\bibitem[Hebb(1949)]{Hebb49}
+Hebb, Donald~O.
+\newblock {The organization of behavior: a neuropsy- chological theory}.
+\newblock 1949.
+
+\bibitem[Hochreiter \& Schmidhuber(1997)Hochreiter and
+  Schmidhuber]{Hochreiter97}
+Hochreiter, Sepp and Schmidhuber, JÃŒrgen.
+\newblock Long short-term memory.
+\newblock \emph{Neural Computation}, 9\penalty0 (8):\penalty0 1735--1780, 1997.
+\newblock \doi{10.1162/neco.1997.9.8.1735}.
+\newblock URL \url{https://doi.org/10.1162/neco.1997.9.8.1735}.
+
+\bibitem[Kingma \& Ba(2014)Kingma and Ba]{KingmaB14}
+Kingma, Diederik~P. and Ba, Jimmy.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock \emph{CoRR}, abs/1412.6980, 2014.
+\newblock URL \url{http://arxiv.org/abs/1412.6980}.
+
+\bibitem[Krizhevsky et~al.(2012)Krizhevsky, Sutskever, and Hinton]{AlexNet}
+Krizhevsky, Alex, Sutskever, Ilya, and Hinton, Geoffrey~E.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In Pereira, F., Burges, C. J.~C., Bottou, L., and Weinberger, K.~Q.
+  (eds.), \emph{Advances in Neural Information Processing Systems 25}, pp.\
+  1097--1105. Curran Associates, Inc., 2012.
+\newblock URL
+  \url{http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}.
+
+\bibitem[Liu \& Tonegawa(2018)Liu and Tonegawa]{Liu12}
+Liu, Xu, Ramirez Steve-Pang Petti T Puryear Corey B Govindarajan Arvind
+  Deisseroth~Karl and Tonegawa, Susumu.
+\newblock Optogenetic stimulation of a hippocampal engram activates fear memory
+  recall.
+\newblock \emph{Nature}, 484:\penalty0 381--385, 2018.
+
+\bibitem[Martin \& Morris(2000)Martin and Morris]{Martin00}
+Martin, Stephen~J, Grimwood-Paul~D and Morris, Richard~GM.
+\newblock Synaptic plasticity and memory: an evaluation of the hypothesis.
+\newblock \emph{Annual review of neuroscience}, 23:\penalty0 649 -- 711, 2000.
+
+\bibitem[Miconi(2016)]{Miconi16}
+Miconi, Thomas.
+\newblock Backpropagation of hebbian plasticity for lifelong learning.
+\newblock \emph{CoRR}, abs/1609.02228, 2016.
+\newblock URL \url{http://arxiv.org/abs/1609.02228}.
+
+\bibitem[Miconi et~al.(2018)Miconi, Clune, and Stanley]{Miconi18}
+Miconi, Thomas, Clune, Jeff, and Stanley, Kenneth~O.
+\newblock Differentiable plasticity: training plastic neural networks with
+  backpropagation.
+\newblock \emph{CoRR}, abs/1804.02464, 2018.
+\newblock URL \url{http://arxiv.org/abs/1804.02464}.
+
+\bibitem[Mnih et~al.(2013)Mnih, Kavukcuoglu, Silver, Graves, Antonoglou,
+  Wierstra, and Riedmiller]{Mnih13}
+Mnih, Volodymyr, Kavukcuoglu, Koray, Silver, David, Graves, Alex, Antonoglou,
+  Ioannis, Wierstra, Daan, and Riedmiller, Martin~A.
+\newblock Playing atari with deep reinforcement learning.
+\newblock \emph{CoRR}, abs/1312.5602, 2013.
+\newblock URL \url{http://arxiv.org/abs/1312.5602}.
+
+\bibitem[Oja(2008)]{Oja08}
+Oja, E.
+\newblock {O}ja learning rule.
+\newblock \emph{Scholarpedia}, 3\penalty0 (3):\penalty0 3612, 2008.
+\newblock \doi{10.4249/scholarpedia.3612}.
+\newblock revision \#91606.
+
+\bibitem[Siegelmann \& Sontag(1995)Siegelmann and Sontag]{Siegelmann95}
+Siegelmann, H.T. and Sontag, E.D.
+\newblock On the computational power of neural nets.
+\newblock \emph{Journal of Computer and System Sciences}, 50\penalty0
+  (1):\penalty0 132 -- 150, 1995.
+\newblock ISSN 0022-0000.
+\newblock \doi{https://doi.org/10.1006/jcss.1995.1013}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0022000085710136}.
+
+\bibitem[Silver et~al.(2017)Silver, Hubert, Schrittwieser, Antonoglou, Lai,
+  Guez, Lanctot, Sifre, Kumaran, Graepel, Lillicrap, Simonyan, and
+  Hassabis]{AlphaGo}
+Silver, David, Hubert, Thomas, Schrittwieser, Julian, Antonoglou, Ioannis, Lai,
+  Matthew, Guez, Arthur, Lanctot, Marc, Sifre, Laurent, Kumaran, Dharshan,
+  Graepel, Thore, Lillicrap, Timothy~P., Simonyan, Karen, and Hassabis, Demis.
+\newblock Mastering chess and shogi by self-play with a general reinforcement
+  learning algorithm.
+\newblock \emph{CoRR}, abs/1712.01815, 2017.
+\newblock URL \url{http://arxiv.org/abs/1712.01815}.
+
+\bibitem[Sutskever et~al.(2014)Sutskever, Vinyals, and Le]{Seq2Seq}
+Sutskever, Ilya, Vinyals, Oriol, and Le, Quoc~V.
+\newblock Sequence to sequence learning with neural networks.
+\newblock \emph{CoRR}, abs/1409.3215, 2014.
+\newblock URL \url{http://arxiv.org/abs/1409.3215}.
+
+\bibitem[Takefuji \& Lee(1990)Takefuji and Lee]{sort1}
+Takefuji, Y. and Lee, K.~C.
+\newblock A super-parallel sorting algorithm based on neural networks.
+\newblock \emph{IEEE Transactions on Circuits and Systems}, 37\penalty0
+  (11):\penalty0 1425--1429, Nov 1990.
+\newblock ISSN 0098-4094.
+\newblock \doi{10.1109/31.62417}.
+
+\bibitem[Thrun \& Pratt(1998)Thrun and Pratt]{Thrun98}
+Thrun, Sebastian and Pratt, Lorien.
+\newblock Learning to learn: Introduction and overview.
+\newblock In Thrun, Sebastian and Pratt, Lorien (eds.), \emph{Learning to
+  Learn}, pp.\  3--17. Kluwer Academic Publishers, orwell, MA, USA, 1998.
+
+\bibitem[Tsodyks et~al.(1998)Tsodyks, Pawelzik, and Markram]{Tsodyks98}
+Tsodyks, Misha, Pawelzik, Klaus, and Markram, Henry.
+\newblock Neural networks with dynamic synapses.
+\newblock \emph{Neural Comput.}, 10\penalty0 (4):\penalty0 821--835, May 1998.
+\newblock ISSN 0899-7667.
+\newblock \doi{10.1162/089976698300017502}.
+\newblock URL \url{http://dx.doi.org/10.1162/089976698300017502}.
+
+\bibitem[Weston et~al.(2014)Weston, Chopra, and Bordes]{WestonCB14}
+Weston, Jason, Chopra, Sumit, and Bordes, Antoine.
+\newblock Memory networks.
+\newblock \emph{CoRR}, abs/1410.3916, 2014.
+\newblock URL \url{http://arxiv.org/abs/1410.3916}.
+
+\bibitem[Wu et~al.(2016)Wu, Schuster, Chen, Le, Norouzi, Macherey, Krikun, Cao,
+  Gao, Macherey, Klingner, Shah, Johnson, Liu, Kaiser, Gouws, Kato, Kudo,
+  Kazawa, Stevens, Kurian, Patil, Wang, Young, Smith, Riesa, Rudnick, Vinyals,
+  Corrado, Hughes, and Dean]{GoogleTranslation}
+Wu, Yonghui, Schuster, Mike, Chen, Zhifeng, Le, Quoc~V., Norouzi, Mohammad,
+  Macherey, Wolfgang, Krikun, Maxim, Cao, Yuan, Gao, Qin, Macherey, Klaus,
+  Klingner, Jeff, Shah, Apurva, Johnson, Melvin, Liu, Xiaobing, Kaiser, Lukasz,
+  Gouws, Stephan, Kato, Yoshikiyo, Kudo, Taku, Kazawa, Hideto, Stevens, Keith,
+  Kurian, George, Patil, Nishant, Wang, Wei, Young, Cliff, Smith, Jason, Riesa,
+  Jason, Rudnick, Alex, Vinyals, Oriol, Corrado, Greg, Hughes, Macduff, and
+  Dean, Jeffrey.
+\newblock Google's neural machine translation system: Bridging the gap between
+  human and machine translation.
+\newblock \emph{CoRR}, abs/1609.08144, 2016.
+\newblock URL \url{http://arxiv.org/abs/1609.08144}.
+
+\end{thebibliography}
